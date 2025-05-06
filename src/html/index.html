@@ -3,853 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClimateBench2 | Climate Modeling Benchmark</title>
-    <style>
-        :root {
-            --primary: #006064;
-            --secondary: #00838f;
-            --accent: #4fb3bf;
-            --light: #e0f7fa;
-            --dark: #263238;
-            --white: #ffffff;
-            --gray: #f5f5f5;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        
-        body {
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--white);
-        }
-        
-        a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        a:hover {
-            color: var(--accent);
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        
-        .logo span {
-            color: var(--accent);
-        }
-        
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 2rem;
-        }
-        
-        nav ul li a {
-            font-weight: 500;
-            color: var(--dark);
-            padding: 0.5rem 0;
-            position: relative;
-        }
-        
-        nav ul li a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-        
-        nav ul li a:hover:after,
-        nav ul li a.active:after {
-            width: 100%;
-        }
-        
-        .mobile-menu {
-            display: none;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url("/api/placeholder/1200/600") center/cover;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--white);
-            margin-top: 70px;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            padding: 0 20px;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.8rem;
-            border-radius: 4px;
-            font-weight: 500;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            color: var(--white);
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--secondary);
-            color: var(--white);
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            color: var(--white);
-            border: 2px solid var(--white);
-        }
-        
-        .btn-outline:hover {
-            background-color: var(--white);
-            color: var(--primary);
-        }
-        
-        /* Featured Section */
-        .featured {
-            padding: 5rem 0;
-            background-color: var(--gray);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .section-title h2 {
-            font-size: 2.2rem;
-            color: var(--primary);
-            position: relative;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-        
-        .section-title h2:after {
-            content: '';
-            position: absolute;
-            width: 60px;
-            height: 3px;
-            background-color: var(--accent);
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .section-title p {
-            max-width: 700px;
-            margin: 0 auto;
-            color: #555;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background-color: var(--white);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-        
-        /* About Section */
-        .about {
-            padding: 5rem 0;
-        }
-        
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-        
-        .about-image {
-            position: relative;
-            height: 400px;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-        }
-        
-        .about-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .about-text h2 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 2rem;
-        }
-        
-        /* Data & Benchmarks */
-        .data-benchmarks {
-            padding: 5rem 0;
-            background-color: var(--light);
-        }
-        
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .tab-btn {
-            padding: 1rem 2rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #555;
-            position: relative;
-        }
-        
-        .tab-btn.active {
-            color: var(--primary);
-        }
-        
-        .tab-btn.active:after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background-color: var(--accent);
-            bottom: -1px;
-            left: 0;
-        }
-        
-        .tab-content {
-            background-color: var(--white);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-        }
-        
-        .tab-pane {
-            display: none;
-        }
-        
-        .tab-pane.active {
-            display: block;
-        }
-        
-        /* Results Section */
-        .results {
-            padding: 5rem 0;
-        }
-        
-        .model-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .model-card {
-            background-color: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-        
-        .model-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .model-card-header {
-            background-color: var(--primary);
-            color: var(--white);
-            padding: 1.5rem;
-        }
-        
-        .model-card-body {
-            padding: 1.5rem;
-        }
-        
-        .model-stats {
-            margin-top: 1rem;
-        }
-        
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .stat-item:last-child {
-            border-bottom: none;
-        }
-        
-        /* Publications */
-        .publications {
-            padding: 5rem 0;
-            background-color: var(--gray);
-        }
-        
-        .publication-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-        
-        .publication-card {
-            background-color: var(--white);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-        
-        .publication-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .publication-card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        .publication-card .authors {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 1rem;
-        }
-        
-        .publication-card .journal {
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-        
-        /* Call to Action */
-        .cta {
-            padding: 5rem 0;
-            background-color: var(--primary);
-            color: var(--white);
-            text-align: center;
-        }
-        
-        .cta h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .cta p {
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            opacity: 0.9;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: var(--white);
-            padding: 4rem 0 2rem;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-        
-        .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-column ul li a {
-            color: #aaa;
-        }
-        
-        .footer-column ul li a:hover {
-            color: var(--white);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .social-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--white);
-            transition: all 0.3s ease;
-        }
-        
-        .social-link:hover {
-            background-color: var(--accent);
-            color: var(--white);
-        }
-        
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 2rem;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #888;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .about-image {
-                height: 300px;
-                margin-bottom: 2rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header-content {
-                position: relative;
-            }
-            
-            .mobile-menu {
-                display: block;
-                font-size: 1.5rem;
-            }
-            
-            nav {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-                transition: clip-path 0.4s ease;
-            }
-            
-            nav.active {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            }
-            
-            nav ul {
-                flex-direction: column;
-                padding: 1rem 0;
-            }
-            
-            nav ul li {
-                margin: 0;
-            }
-            
-            nav ul li a {
-                display: block;
-                padding: 1rem 2rem;
-            }
-            
-            .hero {
-                height: 70vh;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-                margin-bottom: 1rem;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .section-title h2 {
-                font-size: 1.8rem;
-            }
-            
-            .feature-card, .model-card, .publication-card {
-                padding: 1.5rem;
-            }
-            
-            .tabs {
-                flex-wrap: wrap;
-            }
-            
-            .tab-btn {
-                padding: 0.8rem 1.2rem;
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+    <title>ClimateBench2.0: Probabilistic climate model scoring</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="/api/placeholder/40/40" alt="ClimateBench2 Logo">
-                    Climate<span>Bench2</span>
-                </div>
-                <div class="mobile-menu">
-                    <i>≡</i>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="#home" class="active">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#data">Data</a></li>
-                        <li><a href="#benchmarks">Benchmarks</a></li>
-                        <li><a href="#models">Models</a></li>
-                        <li><a href="#results">Results</a></li>
-                        <li><a href="#publications">Publications</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <img src="/api/placeholder/40/40" alt="ClimateBench2 Logo">
+                ClimateBench2
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#data">Data</a></li>
+                <li><a href="#benchmarks">Benchmarks</a></li>
+                <li><a href="#models">Models</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#publications">Publications</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section class="hero">
         <div class="hero-content">
-            <h1>ClimateBench2</h1>
-            <p>An advanced benchmark framework for evaluating machine learning models in climate science applications</p>
-            <div class="cta-buttons">
-                <a href="#" class="btn btn-primary">Get Started</a>
-                <a href="https://github.com/climatebench2" class="btn btn-outline">GitHub Repository</a>
+            <h1></h1>
+            <p>A standardized framework for evaluating and comparing AI models for climate prediction, simulation, and understanding</p>
+            <div class="hero-buttons">
+                <a href="#data" class="btn">Get Started</a>
+                <a href="https://github.com/ClimateBench2" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
             </div>
         </div>
     </section>
 
-    <!-- Featured Section -->
-    <section class="featured">
-        <div class="container">
-            <div class="section-title">
-                <h2>Key Features</h2>
-                <p>ClimateBench2 provides researchers with standardized datasets, evaluation metrics, and benchmarks for climate modeling</p>
-            </div>
-            <div class="features">
-                <div class="feature-card">
+    <!-- Features Section -->
+    <section class="container">
+        <div class="section-title">
+            <h2>Advancing Climate Science with AI</h2>
+            <p>ClimateBench2 provides a comprehensive framework to evaluate machine learning models for climate prediction and understanding</p>
+        </div>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-image">
+                    <img src="/api/placeholder/400/200" alt="Standardized Datasets">
+                </div>
+                <div class="feature-content">
                     <h3>Standardized Datasets</h3>
-                    <p>Access curated, pre-processed climate datasets from various sources, ready for machine learning applications. All datasets follow consistent formatting conventions for easy integration.</p>
+                    <p>Access curated climate datasets with consistent preprocessing for reliable model comparison</p>
+                    <a href="#data">Learn more <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="feature-card">
-                    <h3>Benchmark Suite</h3>
-                    <p>Compare your models against state-of-the-art baselines using our comprehensive benchmark suite designed specifically for climate science challenges.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-image">
+                    <img src="/api/placeholder/400/200" alt="Benchmark Metrics">
                 </div>
-                <div class="feature-card">
-                    <h3>Evaluation Framework</h3>
-                    <p>Utilize our standardized evaluation metrics and tools to assess model performance across different climate variables, spatial scales, and time horizons.</p>
+                <div class="feature-content">
+                    <h3>Comprehensive Metrics</h3>
+                    <p>Evaluate models using scientifically relevant metrics designed specifically for climate variables</p>
+                    <a href="#benchmarks">View metrics <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-image">
+                    <img src="/api/placeholder/400/200" alt="Results Database">
+                </div>
+                <div class="feature-content">
+                    <h3>Results Database</h3>
+                    <p>Compare your model against state-of-the-art approaches in our continuously updated leaderboard</p>
+                    <a href="#results">See results <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
+    <section id="about" class="container">
+        <div class="section-title">
+            <h2>About ClimateBench2</h2>
+            <p>A new generation benchmark for advancing climate science through machine learning</p>
+        </div>
+        <div class="about-section">
+            <div class="about-image">
+                <img src="/api/placeholder/600/400" alt="Climate Scientists Working">
+            </div>
             <div class="about-content">
-                <div class="about-image">
-                    <img src="/api/placeholder/600/400" alt="Climate Modeling Visualization">
-                </div>
-                <div class="about-text">
-                    <h2>About ClimateBench2</h2>
-                    <p>ClimateBench2 is a comprehensive framework designed to accelerate machine learning research in climate science. Building on previous benchmarks, ClimateBench2 offers enhanced datasets, more rigorous evaluation protocols, and greater accessibility.</p>
-                    <p>Our mission is to foster collaboration between the climate science and machine learning communities by providing standardized tools that enable fair comparison of models and methodologies.</p>
-                    <p>ClimateBench2 supports various climate modeling tasks including:</p>
-                    <ul>
-                        <li>Weather forecasting at multiple time scales</li>
-                        <li>Climate projections under different scenarios</li>
-                        <li>Extreme event prediction</li>
-                        <li>Climate downscaling and super-resolution</li>
-                    </ul>
-                </div>
+                <h2>Our Vision</h2>
+                <p>ClimateBench2 builds upon previous climate modeling benchmarks to create a standardized framework that enables fair comparisons between different AI approaches to climate science problems.</p>
+                <p>Our benchmark includes a diverse range of climate datasets, carefully curated evaluation metrics, and standardized training and testing protocols. This allows researchers to focus on model development and innovation while ensuring results are comparable across studies.</p>
+                <p>By providing this common framework, we aim to accelerate progress in climate modeling, prediction, and understanding through machine learning and artificial intelligence.</p>
+                <a href="#" class="btn">Learn More About Our Team</a>
             </div>
         </div>
     </section>
 
-    <!-- Data & Benchmarks Section -->
-    <section id="data" class="data-benchmarks">
-        <div class="container">
-            <div class="section-title">
-                <h2>Data & Benchmarks</h2>
-                <p>Explore our comprehensive collection of datasets and benchmark tasks</p>
-            </div>
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="data">Datasets</button>
-                <button class="tab-btn" data-tab="benchmarks">Benchmark Tasks</button>
-                <button class="tab-btn" data-tab="metrics">Evaluation Metrics</button>
-            </div>
-            <div class="tab-content">
-                <div class="tab-pane active" id="data-tab">
-                    <h3>Available Datasets</h3>
-                    <p>ClimateBench2 provides access to the following datasets:</p>
-                    <ul>
-                        <li><strong>ERA5 Reanalysis:</strong> High-resolution global atmospheric reanalysis data from 1979 to present</li>
-                        <li><strong>CMIP6 Model Outputs:</strong> Climate model projections from the Coupled Model Intercomparison Project Phase 6</li>
-                        <li><strong>Satellite Observations:</strong> Remote sensing data from multiple satellite missions</li>
-                        <li><strong>Extreme Events Database:</strong> Curated collection of extreme weather events with associated meteorological data</li>
-                    </ul>
-                    <p>All datasets are available in standardized formats with consistent spatial and temporal resolutions, making them ready for direct application in machine learning pipelines.</p>
-                    <div class="cta-buttons" style="justify-content: flex-start; margin-top: 20px;">
-                        <a href="#" class="btn btn-primary">Access Datasets</a>
+    <!-- Data Section -->
+    <section id="data" class="container">
+        <div class="section-title">
+            <h2>Data Resources</h2>
+            <p>Access high-quality climate datasets for training and evaluating your models</p>
+        </div>
+        <div class="data-cards">
+            <div class="data-card">
+                <div class="data-card-header">
+                    <div class="data-card-icon">
+                        <i class="fas fa-cloud"></i>
                     </div>
+                    <h3>Atmospheric Data</h3>
                 </div>
-                <div class="tab-pane" id="benchmarks-tab">
-                    <h3>Benchmark Tasks</h3>
-                    <p>ClimateBench2 defines the following benchmark tasks to evaluate model performance:</p>
-                    <ul>
-                        <li><strong>Short-term Weather Forecasting:</strong> Predict weather variables 1-10 days ahead</li>
-                        <li><strong>Seasonal Forecasting:</strong> Predict climate anomalies 1-6 months ahead</li>
-                        <li><strong>Climate Downscaling:</strong> Generate high-resolution climate data from coarse inputs</li>
-                        <li><strong>Extreme Event Prediction:</strong> Forecast the occurrence and intensity of extreme weather events</li>
-                        <li><strong>Climate Sensitivity Assessment:</strong> Predict climate response to forcing scenarios</li>
-                    </ul>
-                    <p>Each benchmark task includes standardized input/output specifications, training protocols, and evaluation metrics.</p>
+                <p>Global atmospheric reanalysis datasets including temperature, pressure, humidity, and wind variables at multiple pressure levels.</p>
+                <a href="#" class="btn">Download Dataset</a>
+            </div>
+            <div class="data-card">
+                <div class="data-card-header">
+                    <div class="data-card-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3>Ocean Data</h3>
                 </div>
-                <div class="tab-pane" id="metrics-tab">
-                    <h3>Evaluation Metrics</h3>
-                    <p>Models are evaluated using a diverse set of metrics:</p>
-                    <ul>
-                        <li><strong>Root Mean Square Error (RMSE):</strong> Measures average prediction error</li>
-                        <li><strong>Anomaly Correlation Coefficient (ACC):</strong> Quantifies pattern similarity between predictions and observations</li>
-                        <li><strong>Continuous Ranked Probability Score (CRPS):</strong> Evaluates probabilistic forecasts</li>
-                        <li><strong>Extreme Event Scores:</strong> Specialized metrics for extreme events (F1-score, Critical Success Index)</li>
-                        <li><strong>Physical Consistency Metrics:</strong> Measures compliance with physical constraints</li>
-                    </ul>
-                    <p>Results are evaluated at multiple spatial scales (global, regional, local) and for different climate variables to provide comprehensive assessment.</p>
+                <p>Ocean temperature, salinity, current, and sea surface height data from global ocean models and observational sources.</p>
+                <a href="#" class="btn">Download Dataset</a>
+            </div>
+            <div class="data-card">
+                <div class="data-card-header">
+                    <div class="data-card-icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <h3>Land Surface Data</h3>
                 </div>
+                <p>Land surface temperature, soil moisture, vegetation indices, and other land-related variables from global datasets.</p>
+                <a href="#" class="btn">Download Dataset</a>
+            </div>
+            <div class="data-card">
+                <div class="data-card-header">
+                    <div class="data-card-icon">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <h3>Cryosphere Data</h3>
+                </div>
+                <p>Sea ice concentration, snow cover, and ice sheet data for polar and high-altitude regions from satellite observations.</p>
+                <a href="#" class="btn">Download Dataset</a>
             </div>
         </div>
+    </section>
+
+    <!-- Benchmarks Section -->
+    <section id="benchmarks" class="container">
+        <div class="section-title">
+            <h2>Benchmark Tasks</h2>
+            <p>Standardized evaluation tasks for comparing climate model performance</p>
+        </div>
+        <table class="benchmarks-table">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Description</th>
+                    <th>Target Variables</th>
+                    <th>Time Scale</th>
+                    <th>Difficulty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Medium-Range Forecasting</td>
+                    <td>Predict atmospheric variables 1-10 days ahead</td>
+                    <td>T2m, Z500, Precipitation</td>
+                    <td>Daily</td>
+                    <td>Medium</td>
+                </tr>
+                <tr>
+                    <td>Seasonal Prediction</td>
+                    <td>Predict climate anomalies 1-6 months ahead</td>
+                    <td>T2m, Precipitation, SST</td>
+                    <td>Monthly</td>
+                    <td>High</td>
+                </tr>
+                <tr>
+                    <td>Extreme Event Prediction</td>
+                    <td>Identify and forecast extreme weather events</td>
+                    <td>Temperature extremes, Precipitation extremes</td>
+                    <td>Daily to Weekly</td>
+                    <td>Very High</td>
+                </tr>
+                <tr>
+                    <td>Climate Downscaling</td>
+                    <td>Generate high-resolution climate data from low-resolution inputs</td>
+                    <td>T2m, Precipitation, Wind</td>
+                    <td>Various</td>
+                    <td>High</td>
+                </tr>
+                <tr>
+                    <td>Climate Emulation</td>
+                    <td>Emulate complex Earth System Model outputs</td>
+                    <td>Multiple climate variables</td>
+                    <td>Monthly to Yearly</td>
+                    <td>High</td>
+                </tr>
+            </tbody>
+        </table>
     </section>
 
     <!-- Models Section -->
-    <section id="models" class="results">
-        <div class="container">
-            <div class="section-title">
-                <h2>Models & Approaches</h2>
-                <p>Explore the diverse range of machine learning and physical models used in climate science</p>
+    <section id="models" class="container">
+        <div class="section-title">
+            <h2>Model Approaches</h2>
+            <p>Explore various AI approaches for climate modeling tasks</p>
+        </div>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>Convolutional Neural Networks</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Convolutional Neural Networks (CNNs) have proven effective for climate data due to their ability to capture spatial patterns. They work well with gridded data common in climate science, such as satellite imagery and climate model outputs.</p>
+                    <p>Notable architectures include U-Net variants for downscaling tasks and ResNet-based models for weather prediction. These approaches excel at extracting local features and spatial hierarchies in climate data.</p>
+                </div>
             </div>
-            <div class="model-cards">
-                <div class="model-card">
-                    <div class="model-card-header">
-                        <h3>Physics-Informed Neural Networks</h3>
-                    </div>
-                    <div class="model-card-body">
-                        <p>Neural networks incorporating physical constraints and domain knowledge to maintain consistency with climate dynamics.</p>
-                        <div class="model-stats">
-                            <div class="stat-item">
-                                <span>Computational Efficiency:</span>
-                                <span>★★★★☆</span>
-                            </div>
-                            <div class="stat-item">
-                                <span>Physical Consistency:</span>
-                                <span>★★★★★</span>
-                            </div>
-                            <div class="stat-item">
-                                <span>Scalability:</span>
-                                <span>★★★☆☆</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>Transformer-Based Models</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
-                <div class="model-card">
-                    <div class="model-card-header">
-                        <h3>Graph Neural Networks</h3>
-                    </div>
-                    <div class="model-card-body">
-                        <p>Models that represent climate data as graphs to capture spatial relationships and teleconnections between distant regions.</p>
-                        <div class="model-stats">
-                            <div class="stat-item">
-                                <span>Computational Efficiency:</span>
-                                <span>★★★☆☆</span>
-                            </div>
-                            <div class="stat-item">
-                                <span>Physical Consistency:</span>
-                                <span>★★★★☆</span>
-                            </div>
-                            <div class="stat-item">
-                                <span>Scalability:</span>
-                                <span>★★★★☆</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="accordion-content">
+                    <p>Transformer architectures have recently shown promising results in climate modeling by capturing long-range dependencies in both space and time. Their self-attention mechanisms help model global patterns across the entire climate system.</p>
+                    <p>Variants such as Vision Transformers (ViT) and FourCastNet have been adapted specifically for geospatial and meteorological data, enabling better modeling of teleconnections and complex climate phenomena.</p>
                 </div>
-                <div class="model-card">
-                    <div class="model-card-header">
-                        <h3>Earth-Specific Transformers</h3>
-                    </div>
-                    <div class="model-card-body">
-                        <p>Transformer architectures adapted for spherical geometry and spatiotemporal climate data processing.</p>
-                        <div class="model-stats">
-                            <div class="stat-item">
-                                <span>Computational Efficiency:</span>
-                                <span>★★☆☆☆</span>
-                            </div>
-                            <div class="stat-item">
-                                <span>Physical Consistency:</span>
-                                <span>★★★☆☆</span>
-                            </div>
-                            <div class="stat-item">
-                                <span>Scalability:</span>
-                                <span>★★★★★</span>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>Recurrent Neural Networks</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Recurrent Neural Networks (RNNs), especially LSTM and GRU variants, are well-suited for climate time series prediction. They can effectively model temporal dependencies in climate data across various timescales.</p>
+                    <p>Hybrid approaches combining RNNs with convolutional layers have shown strong performance for tasks requiring both spatial and temporal understanding, such as seasonal forecasting and climate projection.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>Physics-Informed Neural Networks</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Physics-Informed Neural Networks (PINNs) incorporate physical constraints and equations directly into neural network architectures. This approach ensures that ML models respect fundamental climate physics while learning from data.</p>
+                    <p>By embedding physical laws such as conservation principles and fluid dynamics equations, these models can achieve better generalization and physical consistency compared to purely data-driven approaches.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Results Section -->
-    <section id="results" class="results" style="background-color: var(--light);">
-        <div class="container">
-            <div class="section-title">
-                <h2>Benchmark Results</h2>
-                <p>Comparison of model performance across different benchmark tasks</p>
-            </div>
-            <div class="tab-content">
-                <div class="tab-pane active">
-                    <h3>Short-term Weather Forecasting</h3>
-                    <p>Performance comparison for 10-day weather forecasting task:</p>
-                    <div class="model-stats" style="margin-top: 2rem;">
-                        <div class="stat-item">
-                            <span><strong>Model</strong></span>
-                            <span><strong>RMSE Score</strong></span>
-                        </div>
-                        <div class="stat-item">
-                            <span>Physics-Informed Neural Network</span>
-                            <span>0.43</span>
-                        </div>
-                        <div class="stat-item">
-                            <span>Graph Neural Network</span>
-                            <span>0.51</span>
-                        </div>
-                        <div class="stat-item">
-                            <span>Earth-Specific Transformer</span>
-                            <span>0.39</span>
-                        </div>
-                        <div class="stat-item">
-                            <span>Traditional NWP Model</span>
-                            <span>0.45</span>
-                        </div>
+    <section id="results" class="container">
+        <div class="section-title">
+            <h2>Benchmark Results</h2>
+            <p>Performance comparison of different models across benchmark tasks</p>
+        </div>
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-header">
+                    <h3>Medium-Range Forecasting</h3>
+                    <p>Top performing models for 1-10 day predictions</p>
+                </div>
+                <div class="result-body">
+                    <div class="metric">
+                        <span class="metric-name">TransformerNet</span>
+                        <span class="metric-value">0.87</span>
                     </div>
-                    <p style="margin-top: 1.5rem;">Full results and interactive visualizations are available in the detailed results dashboard.</p>
-                    <div class="cta-buttons" style="justify-content: flex-start; margin-top: 20px;">
-                        <a href="#" class="btn btn-primary">Explore Full Results</a>
+                    <div class="metric">
+                        <span class="metric-name">ConvLSTM</span>
+                        <span class="metric-value">0.83</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-name">U-Net Enhanced</span>
+                        <span class="metric-value">0.81</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-name">ResNet-Climate</span>
+                        <span class="metric-value">0.79</span>
+                    </div>
+                </div>
+            </div>
+            <div class="result-card">
+                <div class="result-header">
+                    <h3>Seasonal Prediction</h3>
+                    <p>Top performing models for monthly predictions</p>
+                </div>
+                <div class="result-body">
+                    <div class="metric">
+                        <span class="metric-name">ClimateFormer</span>
+                        <span class="metric-value">0.72</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-name">SeasonalGNN</span>
+                        <span class="metric-value">0.68</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-name">DeepClimate</span>
+                        <span class="metric-value">0.65</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-name">RecurrentNet</span>
+                        <span class="metric-value">0.61</span>
+                    </div>
+                </div>
+            </div>
+            <div class="result-card">
+                <div class="result-header">
+                    <h3>Climate Downscaling</h3>
+                    <p>Top performing models for spatial resolution enhancement</p>
+                </div>
+                <div class="result-body">
+                    <div class="metric">
+                        <span class="metric-name">HighResGAN</span>
+                        <span class="metric-value">0.91</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-name">ClimateHDNet</span>
+                        <span class="metric-value">0.89</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-name">SuperResUNet</span>
+                        <span class="metric-value">0.86</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-name">EnhanceNet</span>
+                        <span class="metric-value">0.82</span>
                     </div>
                 </div>
             </div>
@@ -857,33 +343,40 @@
     </section>
 
     <!-- Publications Section -->
-    <section id="publications" class="publications">
-        <div class="container">
-            <div class="section-title">
-                <h2>Publications</h2>
-                <p>Research papers using the ClimateBench2 framework</p>
+    <section id="publications" class="container">
+        <div class="section-title">
+            <h2>Related Publications</h2>
+            <p>Academic papers and resources related to ClimateBench2</p>
+        </div>
+        <div class="publications">
+            <div class="publication-card">
+                <h3>ClimateBench2: A Comprehensive Benchmark for Climate Model Emulation</h3>
+                <p class="authors">Smith J., Wang L., Garcia M., et al.</p>
+                <p class="journal">Nature Climate Change, 2025</p>
+                <div class="publication-links">
+                    <a href="#"><i class="fas fa-file-pdf"></i> PDF</a>
+                    <a href="#"><i class="fas fa-external-link-alt"></i> DOI</a>
+                    <a href="#"><i class="fas fa-code"></i> Code</a>
+                </div>
             </div>
-            <div class="publication-list">
-                <div class="publication-card">
-                    <h3>ClimateBench2: A Standardized Framework for Machine Learning in Climate Science</h3>
-                    <div class="authors">Smith J., Johnson A., et al.</div>
-                    <div class="journal">Journal of Machine Learning for Earth Sciences, 2025</div>
-                    <p>This paper introduces the ClimateBench2 framework and details its design principles, benchmark tasks, and evaluation metrics.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Read Paper</a>
+            <div class="publication-card">
+                <h3>Physics-Informed Deep Learning for Climate Downscaling: A ClimateBench2 Case Study</h3>
+                <p class="authors">Johnson R., Chen Y., Thompson K., et al.</p>
+                <p class="journal">Journal of Advances in Modeling Earth Systems, 2024</p>
+                <div class="publication-links">
+                    <a href="#"><i class="fas fa-file-pdf"></i> PDF</a>
+                    <a href="#"><i class="fas fa-external-link-alt"></i> DOI</a>
+                    <a href="#"><i class="fas fa-code"></i> Code</a>
                 </div>
-                <div class="publication-card">
-                    <h3>Improved Medium-Range Weather Forecasting Using Physics-Informed Deep Learning</h3>
-                    <div class="authors">Garcia M., Williams T., et al.</div>
-                    <div class="journal">Nature Climate Change, 2025</div>
-                    <p>This study demonstrates how physics-informed neural networks can outperform traditional numerical weather prediction models for certain forecasting tasks.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Read Paper</a>
-                </div>
-                <div class="publication-card">
-                    <h3>Predictability Limits of Extreme Events in a Changing Climate</h3>
-                    <div class="authors">Chen L., Patel R., et al.</div>
-                    <div class="journal">Geophysical Research Letters, 2024</div>
-                    <p>Analysis of machine learning model performance in predicting extreme weather events under different climate change scenarios.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Read Paper</a>
+            </div>
+            <div class="publication-card">
+                <h3>Transformer-Based Models for Multi-Scale Climate Prediction</h3>
+                <p class="authors">Martinez A., Lee H., Brown D., et al.</p>
+                <p class="journal">Environmental Research Letters, 2024</p>
+                <div class="publication-links">
+                    <a href="#"><i class="fas fa-file-pdf"></i> PDF</a>
+                    <a href="#"><i class="fas fa-external-link-alt"></i> DOI</a>
+                    <a href="#"><i class="fas fa-code"></i> Code</a>
                 </div>
             </div>
         </div>
@@ -891,149 +384,61 @@
 
     <!-- Call to Action -->
     <section class="cta">
-        <div class="container">
-            <h2>Join the ClimateBench2 Community</h2>
-            <p>Contribute your models, access datasets, and collaborate with researchers around the world to advance climate science through machine learning.</p>
-            <div class="cta-buttons">
-                <a href="#" class="btn btn-outline">Get Started</a>
-                <a href="#" class="btn btn-outline">Join Slack Community</a>
-            </div>
+        <h2>Join the ClimateBench2 Community</h2>
+        <p>Contribute your models, share your results, and help advance climate science through machine learning</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn">Get Involved</a>
+            <a href="#" class="btn btn-outline">Subscribe to Updates</a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>ClimateBench2</h3>
-                    <p>An advanced benchmark framework for evaluating machine learning models in climate science applications.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">G</a>
-                        <a href="#" class="social-link">T</a>
-                        <a href="#" class="social-link">L</a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">API Reference</a></li>
-                        <li><a href="#">Model Zoo</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Community</h3>
-                    <ul>
-                        <li><a href="#">GitHub</a></li>
-                        <li><a href="#">Slack Channel</a></li>
-                        <li><a href="#">Forum</a></li>
-                        <li><a href="#">Events</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact</h3>
-                    <ul>
-                        <li><a href="mailto:info@climatebench2.org">info@climatebench2.org</a></li>
-                        <li><a href="#">Submit Feedback</a></li>
-                        <li><a href="#">Report Issue</a></li>
-                    </ul>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2>ClimateBench2</h2>
+                <p>Advancing climate science through standardized benchmarking of AI models</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 ClimateBench2. All rights reserved.</p>
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">GitHub Repository</a></li>
+                    <li><a href="#">Data Access</a></li>
+                </ul>
             </div>
+            <div class="footer-links">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="#">Forum</a></li>
+                    <li><a href="#">Slack Channel</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#">Our Team</a></li>
+                    <li><a href="#">Partners</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 ClimateBench2. All rights reserved.</p>
+            <p>A collaborative project for advancing climate science through machine learning</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script>
-        // Mobile Navigation Toggle
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const nav = document.querySelector('nav');
-        
-        mobileMenu.addEventListener('click', () => {
-            nav.classList.toggle('active');
-        });
-        
-        // Tab Navigation
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                tabBtns.forEach(b => b.classList.remove('active'));
-                
-                // Add active class to clicked button
-                btn.classList.add('active');
-                
-                // Get the tab ID
-                const tabId = btn.getAttribute('data-tab');
-                
-                // Hide all tab content
-                document.querySelectorAll('.tab-pane').forEach(tab => {
-                    tab.classList.remove('active');
-                });
-                
-                // Show the selected tab content
-                document.getElementById(tabId + '-tab') ? 
-                    document.getElementById(tabId + '-tab').classList.add('active') : null;
-            });
-        });
-        
-        // Smooth Scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    nav.classList.remove('active');
-                    
-                    // Update active nav link
-                    document.querySelectorAll('nav a').forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                }
-            });
-        });
-        
-        // Highlight active nav item on scroll
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('nav ul li a');
-            
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                const sectionHeight = section.clientHeight;
-                
-                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
